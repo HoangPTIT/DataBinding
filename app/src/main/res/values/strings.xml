@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DataBindingSample</string>
+    <string name="gender_male">Male</string>
+    <string name="confirm">Xác nhận</string>
+</resources>

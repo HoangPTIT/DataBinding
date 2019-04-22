@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <import type="com.example.hdev.databindingsample.models.User" />
+
+        <variable
+            name="user"
+            type="User" />
+
+        <variable
+            name="handlers"
+            type="com.example.hdev.databindingsample.MainActivity.HandlersEvent" />
+
+        <variable
+            name="isMale"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/textUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_48"
+            android:onClick="@{handlers::handleEventUserName}"
+            android:text="@{user.name}"
+            app:layout_constraintEnd_toStartOf="@+id/textUserAge"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textUserAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_48"
+            android:onClick="@{()->handlers.handleEventUserAge(user)}"
+            android:text="@{String.valueOf(user.age)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textUserName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkboxMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_48"
+            android:onCheckedChanged="@{(cb, isChecked) -> handlers.handleEventCheckBox(user, isChecked)}"
+            android:text="@string/gender_male"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textUserAge" />
+
+        <TextView
+            android:id="@+id/textConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:visibility="@{isMale ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintLeft_toRightOf="@id/checkboxMale"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/checkboxMale" />
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onLongClick="@{() -> handlers.handleButtonConfirmOnLongClick(user)}"
+            android:text="@string/confirm"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/checkboxMale" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
