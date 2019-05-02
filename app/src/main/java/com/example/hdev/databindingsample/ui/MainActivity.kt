@@ -5,32 +5,38 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.example.hdev.databindingsample.R.layout
 import com.example.hdev.databindingsample.data.models.Animals
 import com.example.hdev.databindingsample.data.models.User
+import com.example.hdev.databindingsample.data.viewmodels.AnimalsViewModel
+import com.example.hdev.databindingsample.data.viewmodels.UserViewModel
 import com.example.hdev.databindingsample.databinding.ActivityMainBinding
-import com.example.hdev.databindingsample.util.BindingUtils
 
 class MainActivity : AppCompatActivity() {
 
     private val user by lazy { User("Hoang", 19) }
 
-    private val isMale: Boolean by lazy { true }
-
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var animals: Animals
+    private val animals by lazy { Animals.build("Dog", "Black") }
+
+    private val userViewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
+
+    private val animalViewModel by lazy { ViewModelProviders.of(this).get(AnimalsViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layout.activity_main)
+        binding.lifecycleOwner = this
         binding.user = user
         binding.handlers = HandlersEvent()
-        binding.isMale = isMale
-
-        // Two-way binding
-        animals = Animals.build("Dog", "Black")
+        // Two-way binding use Observable Field
         binding.animals = animals
+        // Two-way binding use Live Data
+        binding.animalModel = animalViewModel
+        //* Use LiveData with ViewModel
+        binding.userModel = userViewModel
     }
 
     inner class HandlersEvent {
@@ -62,12 +68,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, isChecked.toString(), Toast.LENGTH_SHORT).show()
         }
 
-        /**
-         * Listening to returns a value (not void)
-         */
-        fun handleButtonConfirmOnLongClick(user: User): Boolean {
-            Toast.makeText(this@MainActivity, user.name, Toast.LENGTH_SHORT).show()
-            return true
+        fun handleEventButton(user: User) {
+            userViewModel.currentName.value = "Hoang"
         }
     }
 

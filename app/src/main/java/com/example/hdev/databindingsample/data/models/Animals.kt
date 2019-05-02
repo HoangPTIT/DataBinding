@@ -6,7 +6,7 @@ import com.example.hdev.databindingsample.BR
 import java.io.Serializable
 
 /**
- * Binding two-way
+ * Binding two-way use Observable Field
  */
 class Animals : BaseObservable(), Serializable {
 
