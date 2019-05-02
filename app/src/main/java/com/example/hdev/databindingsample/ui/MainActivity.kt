@@ -1,27 +1,36 @@
-package com.example.hdev.databindingsample
+package com.example.hdev.databindingsample.ui
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.hdev.databindingsample.R.layout
+import com.example.hdev.databindingsample.data.models.Animals
+import com.example.hdev.databindingsample.data.models.User
 import com.example.hdev.databindingsample.databinding.ActivityMainBinding
-import com.example.hdev.databindingsample.models.User
+import com.example.hdev.databindingsample.util.BindingUtils
 
 class MainActivity : AppCompatActivity() {
 
-    private val user by lazy { User("I'm Hoang", 19) }
+    private val user by lazy { User("Hoang", 19) }
 
     private val isMale: Boolean by lazy { true }
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var animals: Animals
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, layout.activity_main)
         binding.user = user
         binding.handlers = HandlersEvent()
         binding.isMale = isMale
+
+        // Two-way binding
+        animals = Animals.build("Dog", "Black")
+        binding.animals = animals
     }
 
     inner class HandlersEvent {
@@ -60,5 +69,9 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, user.name, Toast.LENGTH_SHORT).show()
             return true
         }
+    }
+
+    companion object {
+        private const val DATA = "DATA"
     }
 }

@@ -6,25 +6,30 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="com.example.hdev.databindingsample.models.User" />
+
+        <import type="com.example.hdev.databindingsample.data.models.User" />
 
         <variable
             name="user"
-            type="User" />
+            type="com.example.hdev.databindingsample.data.models.User" />
 
         <variable
             name="handlers"
-            type="com.example.hdev.databindingsample.MainActivity.HandlersEvent" />
+            type="com.example.hdev.databindingsample.ui.MainActivity.HandlersEvent" />
 
         <variable
             name="isMale"
             type="Boolean" />
+
+        <variable
+            name="animals"
+            type="com.example.hdev.databindingsample.data.models.Animals" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <TextView
             android:id="@+id/textUserName"
@@ -81,5 +86,52 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/checkboxMale" />
 
+        <EditText
+            android:id="@+id/txtUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_48"
+            android:text="@={animals.nameAnimals}"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonConfirm" />
+
+        <EditText
+            android:id="@+id/txtNationality"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@={animals.styleAnimals}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtUser" />
+
+        <TextView
+            android:id="@+id/textBindingTwoWay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{String.format(animals.nameAnimals, animals.styleAnimals)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtNationality"
+            tools:layout_editor_absoluteX="42dp" />
+
+        <TextView
+            android:id="@+id/textCustomSetter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            app:greetings="@{user.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textBindingTwoWay" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,4 +2,10 @@
     <string name="app_name">DataBindingSample</string>
     <string name="gender_male">Male</string>
     <string name="confirm">Xác nhận</string>
+    <string name="observable_fields_text">Observable Fields activity</string>
+    <string name="viewmodel_text">ViewModel activity</string>
+    <string name="name_label">Name</string>
+    <string name="like">Like</string>
+    <string name="last_name_label">Last name</string>
+    <string name="likes">Likes</string>
 </resources>
